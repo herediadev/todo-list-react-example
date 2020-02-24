@@ -1,31 +1,31 @@
 import * as React from "react";
-import {ChangeEvent, FormEvent, useState} from "react";
+import {ChangeEvent, FormEvent} from "react";
 
 interface ITodoFormComponentProps {
-    addNewTodo: (newTodoTitle: string) => void
+    newTodoTitle: string;
+    addNewTodo: (todoTitle: string) => void;
+    setNewTodoTitle: (newTodoTitle: string) => void
 }
 
-export const TodoFormComponent = (props: ITodoFormComponentProps) => {
+export const TodoFormComponent = React.memo((props: ITodoFormComponentProps) => {
     console.log("todo form");
-
-    const [newTodoTitle, setNewTodoTitle] = useState<string>("");
 
     const handleNewTodoChange = (event: ChangeEvent<HTMLInputElement>) => {
         console.log("handleNewTodoChange");
-        setNewTodoTitle(event.target.value);
+        props.setNewTodoTitle(event.target.value);
     };
 
     const addNewTodo = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        props.addNewTodo(newTodoTitle);
-        setNewTodoTitle("");
+        props.addNewTodo(props.newTodoTitle);
+        props.setNewTodoTitle("");
     };
 
     return (
-        <form action="#" onSubmit={addNewTodo}>
+        <form onSubmit={addNewTodo}>
             <label htmlFor="todoName"/>
-            <input type="text" name="todoName" value={newTodoTitle} onChange={handleNewTodoChange}
+            <input type="text" name="todoName" value={props.newTodoTitle} onChange={handleNewTodoChange}
                    autoComplete="off"/>
         </form>
     );
-};
+});

@@ -4,9 +4,9 @@ interface IClearTodoListActionProps {
     clearTodo: () => void
 }
 
-export const ClearTodoListAction = (props: IClearTodoListActionProps) => {
+export const ClearTodoListAction = React.memo((props: IClearTodoListActionProps) => {
     console.log("ClearTodoListAction");
-    const clearTodoList = props.clearTodo;
-
-    return <button onClick={clearTodoList}>clear todo list</button>;
-};
+    return (
+        <button onClick={props.clearTodo}>clear todo list</button>
+    );
+});
