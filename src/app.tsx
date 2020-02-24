@@ -16,7 +16,7 @@ export interface ITodo {
 }
 
 
-export const App = React.memo(() => {
+const App = React.memo(() => {
     console.log("App");
 
     const [todos, addNewTodo, clearTodo, loadTodo]: IUseTodos = useTodos();
@@ -38,3 +38,7 @@ export const App = React.memo(() => {
         </div>
     );
 });
+
+export {
+    App
+};
