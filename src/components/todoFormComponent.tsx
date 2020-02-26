@@ -1,5 +1,6 @@
 import * as React from "react";
-import {ChangeEvent, FormEvent} from "react";
+import {ChangeEvent, FormEvent, useState} from "react";
+import {observers} from "../observer";
 
 interface ITodoFormComponentProps {
     newTodoTitle: string;
@@ -7,25 +8,27 @@ interface ITodoFormComponentProps {
     setNewTodoTitle: (newTodoTitle: string) => void
 }
 
-export const TodoFormComponent = React.memo((props: ITodoFormComponentProps) => {
+export const TodoFormComponent = () => {
     console.log("todo form");
+
+    const [newTodoTitle, setNewTodoTitle]: [string, (newTodoTitle: string) => void] = useState<string>("");
 
     const handleNewTodoChange = (event: ChangeEvent<HTMLInputElement>) => {
         console.log("handleNewTodoChange");
-        props.setNewTodoTitle(event.target.value);
+        setNewTodoTitle(event.target.value);
     };
 
     const addNewTodo = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        props.addNewTodo(props.newTodoTitle);
-        props.setNewTodoTitle("");
+        observers.trigger("newTodoTitle", newTodoTitle);
+        setNewTodoTitle("");
     };
 
     return (
         <form onSubmit={addNewTodo}>
             <label htmlFor="todoName"/>
-            <input type="text" name="todoName" value={props.newTodoTitle} onChange={handleNewTodoChange}
+            <input type="text" name="todoName" value={newTodoTitle} onChange={handleNewTodoChange}
                    autoComplete="off"/>
         </form>
     );
-});
+};

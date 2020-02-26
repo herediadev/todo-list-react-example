@@ -18,8 +18,7 @@ export const observers: any = {
                 callbacks.splice(callbackFunctionIndexOf, 1);
         };
 
-        if (callbacks) {
+        if (callbacks)
             removeCallback(callbacks.indexOf(callback));
-        }
     }
 };
